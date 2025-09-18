@@ -62,14 +62,7 @@ function Home() {
             <p className="text-lg md:text-xl text-gray-300 mb-8 max-w-3xl mx-auto">
               Live alerts, awareness videos, and safety guides — all in one place.
             </p>
-            <div className="flex justify-center space-x-4">
-              <button className="bg-cyan-600 hover:bg-cyan-500 text-white font-bold py-3 px-8 rounded-full shadow-lg transform hover:scale-105 transition-all duration-300 text-lg">
-                Get Started
-              </button>
-              <button className="bg-transparent border-2 border-emerald-400 hover:bg-emerald-400 hover:text-gray-900 text-emerald-400 font-bold py-3 px-8 rounded-full shadow-lg transform hover:scale-105 transition-all duration-300 text-lg">
-                Learn More
-              </button>
-            </div>
+           
           </div>
         </section>
 

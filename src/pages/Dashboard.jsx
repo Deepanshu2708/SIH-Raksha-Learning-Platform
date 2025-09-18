@@ -22,10 +22,7 @@ const DisasterPreparednessDashboard = () => {
 
   // Simulate data loading
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 800);
-    return () => clearTimeout(timer);
+    setIsLoading(false);
   }, []);
 
   // Data for different timeframes
@@ -209,7 +206,6 @@ const DisasterPreparednessDashboard = () => {
         <motion.div 
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.2 }}
           className="flex mb-6 bg-gray-800 rounded-xl p-1 w-fit border border-gray-700"
         >
           {["daily", "weekly", "overall"].map((item) => (
@@ -240,7 +236,7 @@ const DisasterPreparednessDashboard = () => {
               key={i}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 + i * 0.1 }}
+              transition={{ delay: i * 0.1 }}
               className="bg-gray-800 bg-opacity-70 backdrop-blur-sm p-5 rounded-xl border border-gray-700 hover:border-cyan-400 hover:shadow-lg hover:shadow-cyan-400/10 transition-all duration-300 group"
             >
               <div className="flex justify-between items-start">
@@ -263,7 +259,6 @@ const DisasterPreparednessDashboard = () => {
             <motion.div 
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.4 }}
               className="bg-gray-800 bg-opacity-70 backdrop-blur-sm p-5 rounded-xl border border-gray-700"
             >
               <div className="flex justify-between items-center mb-4">
@@ -342,7 +337,6 @@ const DisasterPreparednessDashboard = () => {
               <motion.div 
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.5 }}
                 className="bg-gray-800 bg-opacity-70 backdrop-blur-sm p-5 rounded-xl border border-gray-700"
               >
                 <div className="flex justify-between items-start mb-4">
@@ -401,7 +395,6 @@ const DisasterPreparednessDashboard = () => {
               <motion.div 
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.6 }}
                 className="bg-gray-800 bg-opacity-70 backdrop-blur-sm p-5 rounded-xl border border-gray-700"
               >
                 <h2 className="text-lg font-semibold text-gray-100 mb-2">Module Distribution</h2>
@@ -443,7 +436,6 @@ const DisasterPreparednessDashboard = () => {
             <motion.div 
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.7 }}
               className="bg-gray-800 bg-opacity-70 backdrop-blur-sm p-5 rounded-xl border border-gray-700"
             >
               <h2 className="text-xl font-semibold text-gray-100 mb-2">Module-wise Performance</h2>
@@ -498,7 +490,6 @@ const DisasterPreparednessDashboard = () => {
             <motion.div 
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.4 }}
               className="bg-gray-800 bg-opacity-70 backdrop-blur-sm p-5 rounded-xl border border-gray-700"
             >
               <h2 className="text-xl font-semibold text-gray-100 mb-2">Community Leaderboard</h2>
@@ -545,7 +536,6 @@ const DisasterPreparednessDashboard = () => {
             <motion.div 
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.5 }}
               className="bg-gray-800 bg-opacity-70 backdrop-blur-sm p-5 rounded-xl border border-gray-700"
             >
               <h2 className="text-xl font-semibold text-gray-100 mb-4">Compare Preparedness</h2>
@@ -610,7 +600,6 @@ const DisasterPreparednessDashboard = () => {
             <motion.div 
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.6 }}
               className="bg-gray-800 bg-opacity-70 backdrop-blur-sm p-5 rounded-xl border border-gray-700"
             >
               <h2 className="text-xl font-semibold text-gray-100 mb-4">Your Preparedness Goals</h2>
