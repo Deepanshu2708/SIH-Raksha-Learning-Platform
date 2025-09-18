@@ -46,7 +46,7 @@ function Home() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 to-blue-900 text-gray-100 font-sans">
-      <main className="container mx-auto px-4 py-8 lg:py-16">
+      <main className="container mx-auto px-4 py-4 lg:py-8">
 
         {/* Hero Section */}
         <section className="relative bg-gradient-to-br from-cyan-900/40 to-emerald-900/40 border border-cyan-600/40 rounded-3xl p-8 md:p-16 text-center shadow-2xl overflow-hidden mb-16">
