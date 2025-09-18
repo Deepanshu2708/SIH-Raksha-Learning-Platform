@@ -91,12 +91,12 @@ export default function Learning() {
     },
   ];
 
-  if (activeModule === "flood") {
+  if (activeModule === "flood" || activeModule === "earthquake" || activeModule === "fire") {
     return (
       <div className="p-6 min-h-screen bg-slate-950 text-white">
         <button
           onClick={() => setActiveModule(null)}
-          className="flex items-center gap-2 text-cyan-400 hover:underline mb-4"
+          className="flex items-center gap-2 text-cyan-400 hover:text-emerald-500 mb-4"
         >
           <ChevronLeft size={18} /> Back to Modules
         </button>
