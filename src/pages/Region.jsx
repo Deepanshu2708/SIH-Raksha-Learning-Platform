@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { FiMapPin, FiAlertCircle, FiHeart, FiWifiOff, FiWifi, FiRefreshCw, FiShare2, FiChevronDown, FiChevronUp, FiPhone, FiHome, FiTruck, FiActivity, FiInfo } from "react-icons/fi";
+import { FiMapPin, FiRefreshCw, FiChevronDown, FiChevronUp, FiPhone, FiHome, FiTruck, FiInfo } from "react-icons/fi";
 import { motion, AnimatePresence } from "framer-motion";
 
 // ======== ENRICHED STATIC DATA ========
@@ -135,34 +135,17 @@ const DATA = [
 ];
 
 // ======== REUSABLE COMPONENTS ========
-const PanelCard = ({ title, children, severity, className = "", refreshable, onRefresh, isExpanded, onToggle, icon: Icon }) => {
-  const severityColors = { 
-    High: "bg-red-900 bg-opacity-20 border-red-700", 
-    Medium: "bg-yellow-900 bg-opacity-20 border-yellow-700", 
-    Low: "bg-green-900 bg-opacity-20 border-green-700" 
-  };
-  
+const PanelCard = ({ title, children, className = "", refreshable, onRefresh, isExpanded, onToggle, icon: Icon }) => {  
   return (
     <motion.div
       initial={{ y: 20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      className={`bg-gray-800 bg-opacity-50 border border-gray-700 rounded-lg p-4 space-y-3 ${
-        severity ? severityColors[severity] : ""
-      } ${className || ""}`}
+      className={`bg-gray-800 bg-opacity-50 border border-gray-700 rounded-lg p-4 space-y-3 ${className || ""}`}
     >
       <div className="font-semibold text-cyan-300 flex items-center justify-between cursor-pointer" onClick={onToggle}>
         <span className="flex items-center gap-2">
           {Icon && <Icon className="text-cyan-400" />}
           {title}
-          {severity && (
-            <span className={`text-xs px-2 py-1 rounded-full ${
-              severity === "High" ? "bg-red-900 text-red-300" :
-              severity === "Medium" ? "bg-yellow-900 text-yellow-300" :
-              "bg-green-900 text-green-300"
-            }`}>
-              {severity} Risk
-            </span>
-          )}
         </span>
         <span className="flex items-center gap-2">
           {refreshable && (
@@ -222,7 +205,6 @@ const StatusPill = ({ status, text }) => (
 // ======== MAIN APP ========
 export default function Region() {
   const [cityId, setCityId] = useState("chennai");
-  const [status, setStatus] = useState("safe");
   const [location, setLocation] = useState(null);
   const [connectivity, setConnectivity] = useState(navigator.onLine);
   const [lastUpdated, setLastUpdated] = useState(new Date());
@@ -278,35 +260,9 @@ export default function Region() {
     );
   };
 
-  // SOS Trigger
-  const sendSOS = () => {
-    const msg = `🚨 SOS ALERT: User needs immediate assistance at ${
-      location ? `${location.lat.toFixed(4)}, ${location.lng.toFixed(4)}` : "unknown location"
-    } - Status: ${status.toUpperCase()}`;
-    
-    // Simulate sending to emergency contacts
-    alert("SOS sent to emergency services! Your location has been shared.");
-  };
-
   // Refresh data
   const refreshData = () => {
     setLastUpdated(new Date());
-  };
-
-  // Share status
-  const shareStatus = () => {
-    if (navigator.share) {
-      navigator.share({
-        title: 'My Emergency Status',
-        text: `I'm currently marked as ${status.toUpperCase()} in ${city.name}. My location: ${location ? `${location.lat.toFixed(4)}, ${location.lng.toFixed(4)}` : 'Not shared'}`,
-        url: window.location.href
-      })
-      .catch(err => {
-        console.log('Error sharing:', err);
-      });
-    } else {
-      alert('Web Share API not supported in your browser');
-    }
   };
 
   // Toggle section expansion
@@ -323,7 +279,6 @@ export default function Region() {
       <header className="bg-gray-800 border-b border-gray-700 p-3 shadow-lg">
         <div className="max-w-7xl mx-auto flex flex-col lg:flex-row justify-between items-center gap-3">
           <div className="text-xl font-bold flex items-center gap-2 text-cyan-400">
-            <FiHeart className="text-red-400" />
             <span className="hidden sm:inline">EMERGENCY</span><span className="text-emerald-400">COORDINATION</span>
           </div>
           
@@ -354,8 +309,6 @@ export default function Region() {
         </div>
       </header>
 
-     
-
       {/* Disaster Alert Banner */}
       <div className={`p-3 text-center font-medium ${
         city.disaster.severity === "High" ? "bg-red-800 text-red-100" :
@@ -377,52 +330,13 @@ export default function Region() {
             title="Your Status & Situation" 
             isExpanded={expandedSections.status}
             onToggle={() => toggleSection('status')}
-            severity={city.disaster.severity}
-            icon={FiActivity}
           >
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-1 gap-2 mt-3">
               <button
-                className={`px-3 py-2 rounded-lg transition-colors flex items-center justify-center gap-2 ${
-                  status === "safe" 
-                    ? "bg-green-700 text-white shadow-md border border-green-500" 
-                    : "bg-gray-700 text-gray-300 hover:bg-gray-600 border border-gray-600"
-                }`}
-                onClick={() => setStatus("safe")}
-              >
-                <div className="w-3 h-3 rounded-full bg-white"></div>
-                Safe
-              </button>
-              <button
-                className={`px-3 py-2 rounded-lg transition-colors flex items-center justify-center gap-2 ${
-                  status === "help" 
-                    ? "bg-red-700 text-white shadow-md border border-red-500" 
-                    : "bg-gray-700 text-gray-300 hover:bg-gray-600 border border-gray-600"
-                }`}
-                onClick={() => setStatus("help")}
-              >
-                <div className="w-3 h-3 rounded-full bg-white"></div>
-                Needs Help
-              </button>
-            </div>
-
-            <div className="grid grid-cols-3 gap-2 mt-3">
-              <button
-                className="px-3 py-2 bg-blue-700 hover:bg-blue-600 text-white rounded-lg flex items-center justify-center gap-2 transition-colors border border-blue-600 text-xs"
+                className="px-3 py-2 bg-blue-700 hover:bg-blue-600 text-white rounded-lg flex items-center justify-center gap-2 transition-colors border border-blue-600 text-sm"
                 onClick={requestLocation}
               >
                 <FiMapPin /> {location ? "Update" : "Share"} Location
-              </button>
-              <button
-                className="px-3 py-2 bg-red-700 hover:bg-red-600 text-white rounded-lg flex items-center justify-center gap-2 transition-colors border border-red-600 text-xs"
-                onClick={sendSOS}
-              >
-                <FiAlertCircle /> SOS
-              </button>
-              <button
-                className="px-3 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg flex items-center justify-center gap-2 transition-colors border border-gray-600 text-xs"
-                onClick={shareStatus}
-              >
-                <FiShare2 />
               </button>
             </div>
 
@@ -442,7 +356,13 @@ export default function Region() {
               </div>
               <div className="flex justify-between">
                 <span className="font-medium text-gray-300">Severity:</span>
-                <StatusPill status={city.disaster.severity} />
+                <span className={`text-xs px-2 py-1 rounded-full ${
+                  city.disaster.severity === "High" ? "bg-red-900 text-red-300" :
+                  city.disaster.severity === "Medium" ? "bg-yellow-900 text-yellow-300" :
+                  "bg-green-900 text-green-300"
+                }`}>
+                  {city.disaster.severity}
+                </span>
               </div>
               <div className="flex justify-between">
                 <span className="font-medium text-gray-300">Last Update:</span>
@@ -503,11 +423,10 @@ export default function Region() {
           </PanelCard>
         </div>
 
-        {/* RIGHT COLUMN - SHELTERS, HOSPITALS & SYSTEM STATUS */}
+        {/* RIGHT COLUMN - SHELTERS, HOSPITALS */}
         <div className="space-y-4">
           <PanelCard 
             title="Shelters" 
-            severity={city.disaster.severity}
             refreshable={true}
             onRefresh={refreshData}
             isExpanded={expandedSections.shelters}
@@ -532,7 +451,6 @@ export default function Region() {
 
           <PanelCard 
             title="Hospitals" 
-            severity={city.disaster.severity}
             isExpanded={expandedSections.hospitals}
             onToggle={() => toggleSection('hospitals')}
           >
@@ -550,27 +468,6 @@ export default function Region() {
                 </ListItem>
               ))}
             </ul>
-          </PanelCard>
-
-          <PanelCard title="System Status" icon={FiInfo}>
-            <div className="text-sm space-y-2">
-              <div className="flex justify-between items-center">
-                <span className="text-gray-300 text-xs">Last Refresh:</span>
-                <span className="text-cyan-300 text-xs">{lastUpdated.toLocaleTimeString()}</span>
-              </div>
-              <div className="flex justify-between items-center">
-                <span className="text-gray-300 text-xs">Connection:</span>
-                <StatusPill status={connectivity ? "Operational" : "Offline"} />
-              </div>
-              <div className="flex justify-between items-center">
-                <span className="text-gray-300 text-xs">User Status:</span>
-                <StatusPill status={status === "safe" ? "Safe" : "Needs Help"} />
-              </div>
-              <div className="flex justify-between items-center">
-                <span className="text-gray-300 text-xs">Location:</span>
-                <StatusPill status={location ? "Active" : "Inactive"} />
-              </div>
-            </div>
           </PanelCard>
         </div>
       </main>
