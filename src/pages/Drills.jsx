@@ -13,7 +13,7 @@ export default function Dashboard() {
 
   // Dummy student data
   const student = {
-    name: "Deepanshu Pandey",
+    name: "Arshad Pandey",
     level: "Intermediate",
     photo: "https://plus.unsplash.com/premium_photo-1689568126014-06fea9d5d341?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D",
     badges: ["Fast Evacuator", "Best Decision Maker", "Quick Responder"],
@@ -181,21 +181,6 @@ export default function Dashboard() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 to-blue-900 text-gray-100 p-6">
-      {/* Header */}
-      <header className="flex items-center justify-between mb-8">
-        <div>
-          <h1 className="text-2xl font-bold text-cyan-400">DISASTER<span className="text-emerald-400">READY</span></h1>
-          <p className="text-sm text-gray-400">Emergency Response Training Interface</p>
-        </div>
-        <div className="flex items-center gap-4">
-          <div className="text-sm text-gray-400">Status: <span className="text-green-400">Operational</span></div>
-          <button className="flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded-lg shadow hover:bg-red-700 transition-colors">
-            <LogOut size={16} />
-            Logout
-          </button>
-        </div>
-      </header>
-
       {/* Profile Section - Hacker Style */}
       <section className="bg-gray-800 bg-opacity-50 border border-gray-700 rounded-xl p-6 mb-8 grid grid-cols-1 md:grid-cols-3 gap-6">
         <div className="flex items-center gap-4">
@@ -434,28 +419,6 @@ export default function Dashboard() {
           )}
         </div>
       )}
-
-      {/* Quick Actions */}
-      <div className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-5">
-        <button className="flex flex-col items-center gap-3 px-6 py-5 bg-cyan-600 text-white rounded-xl shadow hover:bg-cyan-700 transition-all transform hover:-translate-y-1 border border-cyan-500">
-          <div className="p-3 bg-cyan-500 rounded-xl">
-            <Zap className="w-6 h-6" />
-          </div>
-          <span className="font-medium">Quick Drill</span>
-        </button>
-        <button className="flex flex-col items-center gap-3 px-6 py-5 bg-emerald-600 text-white rounded-xl shadow hover:bg-emerald-700 transition-all transform hover:-translate-y-1 border border-emerald-500">
-          <div className="p-3 bg-emerald-500 rounded-xl">
-            <FileText className="w-6 h-6" />
-          </div>
-          <span className="font-medium">Performance Reports</span>
-        </button>
-        <button className="flex flex-col items-center gap-3 px-6 py-5 bg-violet-600 text-white rounded-xl shadow hover:bg-violet-700 transition-all transform hover:-translate-y-1 border border-violet-500">
-          <div className="p-3 bg-violet-500 rounded-xl">
-            <MapPin className="w-6 h-6" />
-          </div>
-          <span className="font-medium">Emergency Map</span>
-        </button>
-      </div>
 
       {/* Emergency Alert Button */}
       <div className="fixed bottom-6 right-6">

@@ -19,7 +19,6 @@ const DATA = [
       { name: "Fire Dept", phone: "101", icon: "🚒" },
       { name: "Ambulance", phone: "102", icon: "🚑" },
       { name: "Disaster Management", phone: "1070", icon: "⚠" },
-      { name: "Women Helpline", phone: "1091", icon: "👩" },
     ],
     shelters: [
       { name: "Anna Nagar Tower Park", type: "Community Hall", capacity: 150, distanceKm: 1.2, occupancy: 120 },
@@ -426,7 +425,7 @@ export default function Region() {
         {/* RIGHT COLUMN - SHELTERS, HOSPITALS */}
         <div className="space-y-4">
           <PanelCard 
-            title="Shelters" 
+            title=" Temporary Relief Shelters" 
             refreshable={true}
             onRefresh={refreshData}
             isExpanded={expandedSections.shelters}

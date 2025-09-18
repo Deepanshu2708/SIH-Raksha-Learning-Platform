@@ -4,7 +4,13 @@ import {
   Pie,
   Cell,
   ResponsiveContainer,
-  Tooltip
+  Tooltip,
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Legend
 } from "recharts";
 import { motion } from "framer-motion";
 
@@ -30,6 +36,24 @@ const DisasterPreparednessDashboard = () => {
     { name: "Hurricanes", value: 15 },
     { name: "First Aid", value: 12 },
     { name: "Emergency Plans", value: 10 },
+  ];
+
+  const modulePerformanceData = [
+    { name: "Earthquakes", score: 85, time: "3h 20m", progress: 90 },
+    { name: "Floods", score: 78, time: "2h 45m", progress: 85 },
+    { name: "Wildfires", score: 92, time: "4h 10m", progress: 95 },
+    { name: "Hurricanes", score: 65, time: "1h 50m", progress: 70 },
+    { name: "First Aid", score: 88, time: "3h 05m", progress: 92 },
+    { name: "Emergency Plans", score: 72, time: "2h 15m", progress: 80 },
+  ];
+
+  const leaderboardData = [
+    { rank: 1, name: "Alex Johnson", score: 95, badges: 12 },
+    { rank: 2, name: "Maria Garcia", score: 92, badges: 11 },
+    { rank: 3, name: "David Smith", score: 90, badges: 10 },
+    { rank: 4, name: "Sarah Williams", score: 88, badges: 9 },
+    { rank: 5, name: "James Brown", score: 85, badges: 8 },
+    { rank: 6, name: "You", score: 81, badges: 7, isCurrentUser: true },
   ];
 
   const COLORS = ['#22d3ee', '#34d399', '#f97316', '#ef4444', '#8884d8', '#a855f7'];
@@ -72,17 +96,42 @@ const DisasterPreparednessDashboard = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 to-blue-900 text-gray-100 font-sans p-6">
       <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <motion.div 
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="mb-8"
-        >
-          <h1 className="text-3xl font-bold text-gray-100">Disaster Preparedness Dashboard</h1>
-          <p className="text-gray-400 mt-2 text-lg">
-            Track your disaster preparedness progress and identify areas for improvement.
-          </p>
-        </motion.div>
+        {/* Header with timeframe selector */}
+        <div className="flex justify-between items-start mb-8">
+          <motion.div 
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+          >
+            <h1 className="text-3xl font-bold text-gray-100">Disaster Preparedness Dashboard</h1>
+            <p className="text-gray-400 mt-2 text-lg">
+              Track your disaster preparedness progress and identify areas for improvement.
+            </p>
+          </motion.div>
+          
+          {/* Timeframe Selector - Moved to top right */}
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="bg-gray-800 bg-opacity-70 backdrop-blur-sm p-4 rounded-xl border border-gray-700 w-64"
+          >
+            <h2 className="text-lg font-semibold text-gray-100 mb-3">Timeframe Selection</h2>
+            <div className="flex bg-gray-700 rounded-xl p-1 w-full border border-gray-600">
+              {["daily", "weekly", "overall"].map((item) => (
+                <button
+                  key={item}
+                  className={`px-4 py-2 rounded-lg text-sm font-medium capitalize transition-all flex-1 ${
+                    timeFrame === item
+                      ? "bg-cyan-600 text-white shadow-lg shadow-cyan-600/30"
+                      : "text-gray-400 hover:text-gray-100 hover:bg-gray-600"
+                  }`}
+                  onClick={() => setTimeFrame(item)}
+                >
+                  {item}
+                </button>
+              ))}
+            </div>
+          </motion.div>
+        </div>
 
         {/* Stats Cards */}
         <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
@@ -155,77 +204,100 @@ const DisasterPreparednessDashboard = () => {
                 </ResponsiveContainer>
               </div>
             </motion.div>
+
+            {/* Module Performance Analytics */}
+<motion.div 
+  initial={{ opacity: 0, x: -20 }}
+  animate={{ opacity: 1, x: 0 }}
+  transition={{ delay: 0.2 }}
+  className="bg-gray-800 bg-opacity-70 backdrop-blur-sm p-5 rounded-xl border border-gray-700"
+>
+  <h2 className="text-xl font-semibold text-gray-100 mb-4">Module Performance Analytics</h2>
+  
+  <div className="space-y-4 max-h-80 overflow-y-hidden scroll-auto pr-2">
+    {modulePerformanceData.map((module, index) => (
+      <div key={index} className="bg-gray-700 bg-opacity-50 p-4 rounded-lg border border-gray-600">
+        <div className="flex justify-between items-center mb-2">
+          <h3 className="font-medium text-gray-100">{module.name}</h3>
+          <div className="flex items-center space-x-3">
+            <span className="text-xs px-2 py-1 bg-cyan-900 text-cyan-200 rounded-full border border-cyan-700">
+              Score: {module.score}%
+            </span>
+            <span className="text-xs px-2 py-1 bg-emerald-900 text-emerald-200 rounded-full border border-emerald-700">
+              Progress: {module.progress}%
+            </span>
+          </div>
+        </div>
+        
+        <div className="flex justify-between items-center text-xs text-gray-400 mb-2">
+          <span>Time spent: {module.time}</span>
+          <span>{module.completed ? "Completed" : "In Progress"}</span>
+        </div>
+        
+        <div className="w-full bg-gray-600 rounded-full h-2 mb-1">
+          <div 
+            className="bg-gradient-to-r from-cyan-400 to-emerald-400 h-2 rounded-full" 
+            style={{width: `${module.progress}%`}}
+          ></div>
+        </div>
+        
+        <div className="flex justify-between items-center text-xs text-gray-400">
+          <span>Last activity: 2 days ago</span>
+          <button className="text-cyan-400 hover:text-cyan-300 transition-colors">
+            Continue Learning →
+          </button>
+        </div>
+      </div>
+    ))}
+  </div>
+</motion.div>
           </div>
 
           {/* Right Column - 1/3 width */}
           <div className="space-y-6">
-            {/* Timeframe Selector - Moved to right side */}
-            <motion.div 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              className="bg-gray-800 bg-opacity-70 backdrop-blur-sm p-5 rounded-xl border border-gray-700"
-            >
-              <h2 className="text-lg font-semibold text-gray-100 mb-4">Timeframe Selection</h2>
-              <div className="flex bg-gray-700 rounded-xl p-1 w-full border border-gray-600">
-                {["daily", "weekly", "overall"].map((item) => (
-                  <button
-                    key={item}
-                    className={`px-4 py-2 rounded-lg text-sm font-medium capitalize transition-all flex-1 ${
-                      timeFrame === item
-                        ? "bg-cyan-600 text-white shadow-lg shadow-cyan-600/30"
-                        : "text-gray-400 hover:text-gray-100 hover:bg-gray-600"
-                    }`}
-                    onClick={() => setTimeFrame(item)}
-                  >
-                    {item}
-                  </button>
-                ))}
-              </div>
-            </motion.div>
-
-            {/* Preparedness Goals */}
+            {/* Leaderboard */}
             <motion.div 
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               className="bg-gray-800 bg-opacity-70 backdrop-blur-sm p-5 rounded-xl border border-gray-700"
             >
-              <h2 className="text-xl font-semibold text-gray-100 mb-4">Your Preparedness Goals</h2>
+              <h2 className="text-xl font-semibold text-gray-100 mb-4">Community Leaderboard</h2>
               
-              <div className="space-y-4">
-                <div className="bg-gray-700 bg-opacity-50 p-3 rounded-lg border border-gray-600">
-                  <div className="flex justify-between items-center mb-2">
-                    <span className="text-sm font-medium text-gray-100">Daily Learning Streak</span>
-                    <span className="text-xs px-2 py-1 bg-cyan-900 text-cyan-200 rounded-full border border-cyan-700">5 days</span>
+              <div className="space-y-3">
+                {leaderboardData.map((user, index) => (
+                  <div 
+                    key={user.rank} 
+                    className={`flex items-center p-3 rounded-lg ${
+                      user.isCurrentUser 
+                        ? 'bg-cyan-900 bg-opacity-30 border border-cyan-700' 
+                        : 'bg-gray-700 bg-opacity-30 border border-gray-600'
+                    }`}
+                  >
+                    <div className={`w-8 h-8 flex items-center justify-center rounded-full mr-3 ${
+                      user.rank === 1 ? 'bg-yellow-500' : 
+                      user.rank === 2 ? 'bg-gray-400' : 
+                      user.rank === 3 ? 'bg-amber-700' : 'bg-gray-800'
+                    }`}>
+                      <span className="font-bold text-xs">{user.rank}</span>
+                    </div>
+                    <div className="flex-1">
+                      <p className={`font-medium ${user.isCurrentUser ? 'text-cyan-300' : 'text-gray-100'}`}>
+                        {user.name}
+                      </p>
+                      <div className="flex text-xs text-gray-400 mt-1">
+                        <span className="mr-3">Score: {user.score}%</span>
+                        <span>Badges: {user.badges}</span>
+                      </div>
+                    </div>
                   </div>
-                  <div className="w-full bg-gray-600 rounded-full h-2">
-                    <div className="bg-cyan-400 h-2 rounded-full" style={{width: '70%'}}></div>
-                  </div>
-                  <p className="text-xs text-gray-400 mt-2">2 more days for weekly bonus</p>
-                </div>
-                
-                <div className="bg-gray-700 bg-opacity-50 p-3 rounded-lg border border-gray-600">
-                  <div className="flex justify-between items-center mb-2">
-                    <span className="text-sm font-medium text-gray-100">Weekly Target</span>
-                    <span className="text-xs px-2 py-1 bg-emerald-900 text-emerald-200 rounded-full border border-emerald-700">8/10 modules</span>
-                  </div>
-                  <div className="w-full bg-gray-600 rounded-full h-2">
-                    <div className="bg-emerald-400 h-2 rounded-full" style={{width: '80%'}}></div>
-                  </div>
-                  <p className="text-xs text-gray-400 mt-2">Complete 2 more modules this week</p>
-                </div>
-                
-                <div className="bg-gray-700 bg-opacity-50 p-3 rounded-lg border border-gray-600">
-                  <div className="flex justify-between items-center mb-2">
-                    <span className="text-sm font-medium text-gray-100">Preparedness Level</span>
-                    <span className="text-xs px-2 py-1 bg-purple-900 text-purple-200 rounded-full border border-purple-700">Level 6 → 7</span>
-                  </div>
-                  <div className="w-full bg-gray-600 rounded-full h-2">
-                    <div className="bg-purple-400 h-2 rounded-full" style={{width: '60%'}}></div>
-                  </div>
-                  <p className="text-xs text-gray-400 mt-2">120 points needed to reach next level</p>
-                </div>
+                ))}
               </div>
+{/*               
+              <button className="w-full mt-4 py-2 bg-cyan-700 hover:bg-cyan-600 text-white rounded-lg transition-colors">
+                View Full Leaderboard
+              </button> */}
             </motion.div>
+
           </div>
         </div>
       </div>
