@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import {
-  LineChart,
-  Line,
+  AreaChart,
+  Area,
   XAxis,
   YAxis,
   Tooltip,
@@ -9,18 +9,15 @@ import {
   CartesianGrid,
   BarChart,
   Bar,
-  Legend,
-  AreaChart,
-  Area,
   Cell,
   PieChart,
   Pie
 } from "recharts";
 import { motion } from "framer-motion";
 
-const PathshaalaDashboard = () => {
+const DisasterPreparednessDashboard = () => {
   const [timeFrame, setTimeFrame] = useState("weekly");
-  const [compareWith, setCompareWith] = useState("Deepanshu");
+  const [compareWith, setCompareWith] = useState("Regional Average");
   const [isLoading, setIsLoading] = useState(true);
 
   // Simulate data loading
@@ -32,31 +29,31 @@ const PathshaalaDashboard = () => {
   }, []);
 
   // Data for different timeframes
-  const performanceData = {
+  const preparednessData = {
     daily: [
-      { day: "Mon", you: 65, topper: 92 },
-      { day: "Tue", you: 72, topper: 95 },
-      { day: "Wed", you: 68, topper: 96 },
-      { day: "Thu", you: 78, topper: 97 },
-      { day: "Fri", you: 82, topper: 98 },
-      { day: "Sat", you: 85, topper: 99 },
-      { day: "Sun", you: 88, topper: 100 },
+      { day: "Mon", you: 65, average: 72 },
+      { day: "Tue", you: 72, average: 75 },
+      { day: "Wed", you: 68, average: 74 },
+      { day: "Thu", you: 78, average: 76 },
+      { day: "Fri", you: 82, average: 78 },
+      { day: "Sat", you: 85, average: 80 },
+      { day: "Sun", you: 88, average: 82 },
     ],
     weekly: [
-      { week: "W1", you: 72, topper: 95 },
-      { week: "W2", you: 78, topper: 96 },
-      { week: "W3", you: 85, topper: 98 },
-      { week: "W4", you: 88, topper: 99 },
+      { week: "W1", you: 72, average: 75 },
+      { week: "W2", you: 78, average: 76 },
+      { week: "W3", you: 85, average: 78 },
+      { week: "W4", you: 88, average: 80 },
     ],
     overall: [
-      { month: "Jan", you: 65, topper: 90 },
-      { month: "Feb", you: 70, topper: 92 },
-      { month: "Mar", you: 72, topper: 94 },
-      { month: "Apr", you: 75, topper: 95 },
-      { month: "May", you: 78, topper: 96 },
-      { month: "Jun", you: 82, topper: 97 },
-      { month: "Jul", you: 85, topper: 98 },
-      { month: "Aug", you: 88, topper: 99 },
+      { month: "Jan", you: 65, average: 70 },
+      { month: "Feb", you: 70, average: 72 },
+      { month: "Mar", you: 72, average: 74 },
+      { month: "Apr", you: 75, average: 75 },
+      { month: "May", you: 78, average: 76 },
+      { month: "Jun", you: 82, average: 77 },
+      { month: "Jul", you: 85, average: 78 },
+      { month: "Aug", you: 88, average: 80 },
     ],
   };
 
@@ -88,37 +85,39 @@ const PathshaalaDashboard = () => {
     ],
   };
 
-  const leaderboardData = [
-    { rank: 1, name: "TopperX", score: 1000, progress: 100 },
-    { rank: 2, name: "Aisha", score: 995, progress: 99.5 },
-    { rank: 3, name: "Rohit", score: 985, progress: 98.5 },
-    { rank: 4, name: "Meera", score: 972, progress: 97.2 },
-    { rank: 5, name: "Sahil", score: 960, progress: 96.0 },
-    { rank: 6, name: "Deepanshu", score: 880, progress: 88.0 },
+  const communityData = [
+    { rank: 1, name: "Preparedness Pro", score: 1000, progress: 100 },
+    { rank: 2, name: "Safety First", score: 995, progress: 99.5 },
+    { rank: 3, name: "Emergency Expert", score: 985, progress: 98.5 },
+    { rank: 4, name: "Disaster Defender", score: 972, progress: 97.2 },
+    { rank: 5, name: "Readiness Ranger", score: 960, progress: 96.0 },
+    { rank: 6, name: "Regional Average", score: 820, progress: 82.0 },
   ];
 
-  const detailedScoresData = [
-    { module: "Algebra", you: "72%", topper: "95%", delta: "23%" },
-    { module: "Geometry", you: "78%", topper: "96%", delta: "18%" },
-    { module: "Calculus", you: "85%", topper: "98%", delta: "13%" },
-    { module: "Statistics", you: "88%", topper: "99%", delta: "11%" },
+  const moduleScoresData = [
+    { module: "Earthquakes", you: "72%", average: "75%", delta: "3%" },
+    { module: "Floods", you: "78%", average: "76%", delta: "-2%" },
+    { module: "Wildfires", you: "85%", average: "78%", delta: "-7%" },
+    { module: "Hurricanes", you: "88%", average: "80%", delta: "-8%" },
+    { module: "First Aid", you: "92%", average: "85%", delta: "-7%" },
   ];
 
   const statsData = {
-    daily: { quizzes: 3, score: "78%", subjects: 5, badges: 1, timeSpent: "2h 15m" },
-    weekly: { quizzes: 12, score: "81%", subjects: 7, badges: 3, timeSpent: "14h 30m" },
-    overall: { quizzes: 86, score: "79%", subjects: 9, badges: 7, timeSpent: "98h 45m" },
+    daily: { modules: 3, score: "78%", categories: 5, badges: 1, timeSpent: "2h 15m" },
+    weekly: { modules: 12, score: "81%", categories: 7, badges: 3, timeSpent: "14h 30m" },
+    overall: { modules: 86, score: "79%", categories: 9, badges: 7, timeSpent: "98h 45m" },
   };
 
-  const subjectDistributionData = [
-    { name: "Math", value: 35 },
-    { name: "Physics", value: 25 },
-    { name: "Chemistry", value: 20 },
-    { name: "Biology", value: 15 },
-    { name: "English", value: 5 },
+  const moduleDistributionData = [
+    { name: "Earthquakes", value: 25 },
+    { name: "Floods", value: 20 },
+    { name: "Wildfires", value: 18 },
+    { name: "Hurricanes", value: 15 },
+    { name: "First Aid", value: 12 },
+    { name: "Emergency Plans", value: 10 },
   ];
 
-  const COLORS = ['#22d3ee', '#34d399', '#f97316', '#ef4444', '#8884d8'];
+  const COLORS = ['#22d3ee', '#34d399', '#f97316', '#ef4444', '#8884d8', '#a855f7'];
 
   const currentStats = statsData[timeFrame];
 
@@ -129,7 +128,7 @@ const PathshaalaDashboard = () => {
         <div className="bg-gray-800 bg-opacity-90 p-3 rounded-xl border border-cyan-400 border-opacity-30 shadow-lg backdrop-blur-sm">
           <p className="text-gray-100 font-medium">{`${timeFrame === "daily" ? "Day" : timeFrame === "weekly" ? "Week" : "Month"}: ${label}`}</p>
           <p className="text-cyan-400">{`You: ${payload[0].value}%`}</p>
-          <p className="text-emerald-400">{`Topper: ${payload[1].value}%`}</p>
+          <p className="text-emerald-400">{`Average: ${payload[1].value}%`}</p>
         </div>
       );
     }
@@ -142,7 +141,7 @@ const PathshaalaDashboard = () => {
       return (
         <div className="bg-gray-800 bg-opacity-90 p-3 rounded-xl border border-cyan-400 border-opacity-30 shadow-lg backdrop-blur-sm">
           <p className="text-gray-100 font-medium">{`${timeFrame === "daily" ? "Day" : timeFrame === "weekly" ? "Week" : "Month"}: ${label}`}</p>
-          <p className="text-cyan-400">{`Rank: ${payload[0].value}`}</p>
+          <p className="text-cyan-400">{`Preparedness Rank: ${payload[0].value}`}</p>
         </div>
       );
     }
@@ -200,9 +199,9 @@ const PathshaalaDashboard = () => {
           animate={{ opacity: 1, y: 0 }}
           className="mb-8"
         >
-          <h1 className="text-3xl font-bold text-gray-100">Pathshaala Performance Dashboard</h1>
+          <h1 className="text-3xl font-bold text-gray-100">Disaster Preparedness Dashboard</h1>
           <p className="text-gray-400 mt-2 text-lg">
-            Track your learning progress, compare with top performers, and identify areas for improvement.
+            Track your disaster preparedness progress, compare with community averages, and identify areas for improvement.
           </p>
         </motion.div>
 
@@ -231,9 +230,9 @@ const PathshaalaDashboard = () => {
         {/* Stats Cards */}
         <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
           {[
-            { title: "Quizzes Attended", value: currentStats.quizzes, desc: `This ${timeFrame}`, icon: "📝", color: "bg-cyan-600" },
+            { title: "Modules Completed", value: currentStats.modules, desc: `This ${timeFrame}`, icon: "📝", color: "bg-cyan-600" },
             { title: "Average Score", value: currentStats.score, desc: "Performance", icon: "📊", color: "bg-emerald-400" },
-            { title: "Active Subjects", value: currentStats.subjects, desc: "Ongoing", icon: "📚", color: "bg-cyan-400" },
+            { title: "Categories", value: currentStats.categories, desc: "Covered", icon: "📚", color: "bg-cyan-400" },
             { title: "Badges Earned", value: currentStats.badges, desc: "Achievements", icon: "🏆", color: "bg-yellow-500" },
             { title: "Time Spent", value: currentStats.timeSpent, desc: "Learning", icon: "⏱️", color: "bg-red-500" },
           ].map((card, i) => (
@@ -260,7 +259,7 @@ const PathshaalaDashboard = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Left Column - 2/3 width */}
           <div className="lg:col-span-2 space-y-6">
-            {/* Student vs Topper Chart */}
+            {/* Your Preparedness vs Average Chart */}
             <motion.div 
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
@@ -269,8 +268,8 @@ const PathshaalaDashboard = () => {
             >
               <div className="flex justify-between items-center mb-4">
                 <div>
-                  <h2 className="text-xl font-semibold text-gray-100">Performance Comparison</h2>
-                  <p className="text-sm text-gray-400">Your progress vs. the topper's performance</p>
+                  <h2 className="text-xl font-semibold text-gray-100">Preparedness Comparison</h2>
+                  <p className="text-sm text-gray-400">Your progress vs. community average preparedness</p>
                 </div>
                 <div className="flex items-center space-x-2">
                   <div className="flex items-center">
@@ -279,7 +278,7 @@ const PathshaalaDashboard = () => {
                   </div>
                   <div className="flex items-center">
                     <div className="w-3 h-3 rounded-full bg-emerald-400 mr-2"></div>
-                    <span className="text-sm text-gray-400">Topper</span>
+                    <span className="text-sm text-gray-400">Average</span>
                   </div>
                 </div>
               </div>
@@ -287,7 +286,7 @@ const PathshaalaDashboard = () => {
               <div className="h-72">
                 <ResponsiveContainer width="100%" height="100%">
                   <AreaChart 
-                    data={performanceData[timeFrame]} 
+                    data={preparednessData[timeFrame]} 
                     margin={{ top: 10, right: 10, bottom: 10, left: 0 }}
                   >
                     <CartesianGrid strokeDasharray="3 3" stroke="#374151" vertical={false} />
@@ -309,7 +308,7 @@ const PathshaalaDashboard = () => {
                         <stop offset="5%" stopColor="#22d3ee" stopOpacity={0.8}/>
                         <stop offset="95%" stopColor="#22d3ee" stopOpacity={0.1}/>
                       </linearGradient>
-                      <linearGradient id="colorTopper" x1="0" y1="0" x2="0" y2="1">
+                      <linearGradient id="colorAverage" x1="0" y1="0" x2="0" y2="1">
                         <stop offset="5%" stopColor="#34d399" stopOpacity={0.8}/>
                         <stop offset="95%" stopColor="#34d399" stopOpacity={0.1}/>
                       </linearGradient>
@@ -325,10 +324,10 @@ const PathshaalaDashboard = () => {
                     />
                     <Area 
                       type="monotone" 
-                      dataKey="topper" 
+                      dataKey="average" 
                       stroke="#34d399" 
-                      fill="url(#colorTopper)" 
-                      name="Topper" 
+                      fill="url(#colorAverage)" 
+                      name="Average" 
                       strokeWidth={2}
                       activeDot={{ r: 6, stroke: '#34d399', strokeWidth: 2, fill: '#1f2937' }}
                     />
@@ -337,7 +336,7 @@ const PathshaalaDashboard = () => {
               </div>
             </motion.div>
 
-            {/* Rank Progression and Subject Distribution */}
+            {/* Rank Progression and Module Distribution */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Rank Progression */}
               <motion.div 
@@ -348,12 +347,12 @@ const PathshaalaDashboard = () => {
               >
                 <div className="flex justify-between items-start mb-4">
                   <div>
-                    <h2 className="text-lg font-semibold text-gray-100 mb-2">Rank Progression</h2>
-                    <p className="text-sm text-gray-400">How your rank moved recently</p>
+                    <h2 className="text-lg font-semibold text-gray-100 mb-2">Preparedness Ranking</h2>
+                    <p className="text-sm text-gray-400">How your preparedness rank moved recently</p>
                   </div>
                   <div className="bg-cyan-900 bg-opacity-50 px-3 py-1 rounded-lg border border-cyan-600 border-opacity-30">
                     <p className="text-xs text-cyan-400">
-                      Better than 44% of students
+                      Better than 44% of community
                     </p>
                   </div>
                 </div>
@@ -393,26 +392,26 @@ const PathshaalaDashboard = () => {
                 </div>
                 
                 <div className="mt-4 p-3 bg-gray-700 bg-opacity-50 rounded-lg border border-gray-600">
-                  <p className="text-sm font-medium text-gray-100">Current Rank: #6</p>
-                  <p className="text-xs text-gray-400">44% Better</p>
+                  <p className="text-sm font-medium text-gray-100">Current Preparedness Rank: #6</p>
+                  <p className="text-xs text-gray-400">44% Better than community average</p>
                 </div>
               </motion.div>
 
-              {/* Subject Distribution */}
+              {/* Module Distribution */}
               <motion.div 
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.6 }}
                 className="bg-gray-800 bg-opacity-70 backdrop-blur-sm p-5 rounded-xl border border-gray-700"
               >
-                <h2 className="text-lg font-semibold text-gray-100 mb-2">Subject Distribution</h2>
-                <p className="text-sm text-gray-400 mb-4">Time spent by subject</p>
+                <h2 className="text-lg font-semibold text-gray-100 mb-2">Module Distribution</h2>
+                <p className="text-sm text-gray-400 mb-4">Focus areas across disaster types</p>
                 
                 <div className="h-48">
                   <ResponsiveContainer width="100%" height="100%">
                     <PieChart>
                       <Pie
-                        data={subjectDistributionData}
+                        data={moduleDistributionData}
                         cx="50%"
                         cy="50%"
                         labelLine={false}
@@ -421,7 +420,7 @@ const PathshaalaDashboard = () => {
                         dataKey="value"
                         label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
                       >
-                        {subjectDistributionData.map((entry, index) => (
+                        {moduleDistributionData.map((entry, index) => (
                           <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                         ))}
                       </Pie>
@@ -440,42 +439,42 @@ const PathshaalaDashboard = () => {
               </motion.div>
             </div>
 
-            {/* Detailed Scores */}
+            {/* Module-wise Performance */}
             <motion.div 
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.7 }}
               className="bg-gray-800 bg-opacity-70 backdrop-blur-sm p-5 rounded-xl border border-gray-700"
             >
-              <h2 className="text-xl font-semibold text-gray-100 mb-2">Subject-wise Performance</h2>
-              <p className="text-sm text-gray-400 mb-4">Detailed breakdown by subject area</p>
+              <h2 className="text-xl font-semibold text-gray-100 mb-2">Module-wise Performance</h2>
+              <p className="text-sm text-gray-400 mb-4">Detailed breakdown by disaster type</p>
               
               <div className="overflow-x-auto">
                 <table className="w-full text-sm">
                   <thead>
                     <tr className="text-left text-gray-400 border-b border-gray-700">
-                      <th className="pb-3 font-medium">Subject</th>
+                      <th className="pb-3 font-medium">Disaster Module</th>
                       <th className="pb-3 font-medium">Your Score</th>
-                      <th className="pb-3 font-medium">Topper's Score</th>
-                      <th className="pb-3 font-medium">Gap</th>
+                      <th className="pb-3 font-medium">Avg. Score</th>
+                      <th className="pb-3 font-medium">Difference</th>
                       <th className="pb-3 font-medium">Status</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {detailedScoresData.map((row, index) => (
+                    {moduleScoresData.map((row, index) => (
                       <tr key={index} className="border-b border-gray-700 last:border-0 hover:bg-gray-700 hover:bg-opacity-30">
                         <td className="py-3 text-gray-100 font-medium">{row.module}</td>
                         <td className="py-3 text-gray-100">{row.you}</td>
-                        <td className="py-3 text-gray-100">{row.topper}</td>
-                        <td className="py-3 text-red-400">{row.delta}</td>
+                        <td className="py-3 text-gray-100">{row.average}</td>
+                        <td className={`py-3 ${parseInt(row.delta) > 0 ? 'text-green-400' : 'text-red-400'}`}>{row.delta}</td>
                         <td className="py-3">
                           <span className={`px-2 py-1 rounded-full text-xs ${
-                            parseInt(row.delta) > 20 ? "bg-red-900 text-red-200 border border-red-700" : 
-                            parseInt(row.delta) > 10 ? "bg-yellow-900 text-yellow-200 border border-yellow-700" : 
-                            "bg-green-900 text-green-200 border border-green-700"
+                            parseInt(row.delta) > 5 ? "bg-green-900 text-green-200 border border-green-700" : 
+                            parseInt(row.delta) > 0 ? "bg-yellow-900 text-yellow-200 border border-yellow-700" : 
+                            "bg-red-900 text-red-200 border border-red-700"
                           }`}>
-                            {parseInt(row.delta) > 20 ? "Needs Work" : 
-                             parseInt(row.delta) > 10 ? "Average" : "Good"}
+                            {parseInt(row.delta) > 5 ? "Ahead" : 
+                             parseInt(row.delta) > 0 ? "On Track" : "Needs Focus"}
                           </span>
                         </td>
                       </tr>
@@ -487,7 +486,7 @@ const PathshaalaDashboard = () => {
               <div className="mt-6 bg-gray-700 bg-opacity-50 p-4 rounded-lg border border-gray-600">
                 <p className="text-sm font-medium text-gray-100 mb-1">Improvement Recommendation</p>
                 <p className="text-xs text-gray-400">
-                  Focus on Algebra and Geometry where the performance gap is highest. Try our specialized practice modules.
+                  Focus on Hurricanes and First Aid modules where your performance is below average. Try our specialized preparedness drills.
                 </p>
               </div>
             </motion.div>
@@ -495,22 +494,22 @@ const PathshaalaDashboard = () => {
 
           {/* Right Column - 1/3 width */}
           <div className="space-y-6">
-            {/* Leaderboard */}
+            {/* Community Leaderboard */}
             <motion.div 
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.4 }}
               className="bg-gray-800 bg-opacity-70 backdrop-blur-sm p-5 rounded-xl border border-gray-700"
             >
-              <h2 className="text-xl font-semibold text-gray-100 mb-2">Class Leaderboard</h2>
-              <p className="text-sm text-gray-400 mb-4">Top performers in your cohort</p>
+              <h2 className="text-xl font-semibold text-gray-100 mb-2">Community Leaderboard</h2>
+              <p className="text-sm text-gray-400 mb-4">Top performers in your region</p>
               
               <div className="space-y-3">
-                {leaderboardData.map((student, index) => (
+                {communityData.map((member, index) => (
                   <div 
                     key={index} 
                     className={`flex items-center justify-between p-3 rounded-lg transition-all ${
-                      student.name === compareWith 
+                      member.name === compareWith 
                         ? "bg-cyan-900 bg-opacity-30 border border-cyan-400" 
                         : "hover:bg-gray-700 hover:bg-opacity-30"
                     }`}
@@ -521,45 +520,45 @@ const PathshaalaDashboard = () => {
                         index === 1 ? "bg-gray-700 text-gray-200 border border-gray-600" : 
                         index === 2 ? "bg-amber-900 text-amber-200 border border-amber-600" : "bg-gray-700 text-gray-400 border border-gray-600"
                       }`}>
-                        {index < 3 ? ["🥇", "🥈", "🥉"][index] : student.rank}
+                        {index < 3 ? ["🥇", "🥈", "🥉"][index] : member.rank}
                       </div>
                       <div className="ml-3">
-                        <p className="font-medium text-gray-100">{student.name}</p>
+                        <p className="font-medium text-gray-100">{member.name}</p>
                         <div className="flex items-center">
                           <div className="w-20 h-1.5 bg-gray-700 rounded-full mt-1 mr-2">
                             <div 
                               className="h-full bg-cyan-400 rounded-full" 
-                              style={{ width: `${student.progress}%` }}
+                              style={{ width: `${member.progress}%` }}
                             ></div>
                           </div>
-                          <span className="text-xs text-gray-400">{student.progress}%</span>
+                          <span className="text-xs text-gray-400">{member.progress}%</span>
                         </div>
                       </div>
                     </div>
-                    <span className="text-gray-100 font-medium">{student.score}</span>
+                    <span className="text-gray-100 font-medium">{member.score}</span>
                   </div>
                 ))}
               </div>
             </motion.div>
 
-            {/* Compare With Topper */}
+            {/* Compare With Community */}
             <motion.div 
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.5 }}
               className="bg-gray-800 bg-opacity-70 backdrop-blur-sm p-5 rounded-xl border border-gray-700"
             >
-              <h2 className="text-xl font-semibold text-gray-100 mb-4">Compare Performance</h2>
+              <h2 className="text-xl font-semibold text-gray-100 mb-4">Compare Preparedness</h2>
               
               <div className="mb-4">
-                <label className="block text-sm text-gray-400 mb-2">Select student to compare:</label>
+                <label className="block text-sm text-gray-400 mb-2">Select comparison benchmark:</label>
                 <select 
                   className="w-full p-2.5 bg-gray-700 border border-gray-600 rounded-lg text-sm text-gray-100 focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400 outline-none transition"
                   value={compareWith}
                   onChange={(e) => setCompareWith(e.target.value)}
                 >
-                  {leaderboardData.map(student => (
-                    <option key={student.rank} value={student.name}>{student.name} (Rank #{student.rank})</option>
+                  {communityData.map(member => (
+                    <option key={member.rank} value={member.name}>{member.name} (Rank #{member.rank})</option>
                   ))}
                 </select>
               </div>
@@ -569,37 +568,37 @@ const PathshaalaDashboard = () => {
                   <div>
                     <p className="text-sm font-medium text-gray-100">{compareWith}</p>
                     <p className="text-xs text-gray-400">
-                      Rank #{leaderboardData.find(s => s.name === compareWith)?.rank}
+                      Rank #{communityData.find(s => s.name === compareWith)?.rank}
                     </p>
                   </div>
                   <div className="text-right">
                     <p className="text-sm font-medium text-gray-100">
-                      {leaderboardData.find(s => s.name === compareWith)?.score} pts
+                      {communityData.find(s => s.name === compareWith)?.score} pts
                     </p>
                     <p className="text-xs text-gray-400">
-                      {leaderboardData.find(s => s.name === compareWith)?.progress}% progress
+                      {communityData.find(s => s.name === compareWith)?.progress}% preparedness
                     </p>
                   </div>
                 </div>
               </div>
               
               <div className="bg-gray-700 bg-opacity-50 p-4 rounded-lg border border-gray-600 mb-4">
-                <p className="text-sm font-medium text-gray-100 mb-1">Your percentile ranking</p>
+                <p className="text-sm font-medium text-gray-100 mb-1">Your community percentile</p>
                 <div className="w-full bg-gray-600 rounded-full h-2.5 mt-2">
                   <div className="bg-cyan-400 h-2.5 rounded-full" style={{width: '44%'}}></div>
                 </div>
-                <p className="text-xs text-gray-400 mt-2">You're performing better than 44% of students</p>
+                <p className="text-xs text-gray-400 mt-2">You're more prepared than 44% of your community</p>
                 <p className="text-xs text-cyan-400 mt-1">
-                  You need 120 more points to reach the next rank.
+                  You need 120 more points to reach the next preparedness level.
                 </p>
               </div>
               
               <div className="grid grid-cols-1 gap-2">
                 <button className="bg-cyan-600 text-white py-2.5 px-3 rounded-lg text-sm font-medium hover:bg-cyan-500 transition shadow-lg shadow-cyan-600/30 flex items-center justify-center">
-                  <span>Take Practice Quiz</span>
+                  <span>Take Preparedness Quiz</span>
                 </button>
                 <button className="bg-gray-700 border border-gray-600 py-2.5 px-3 rounded-lg text-sm font-medium text-gray-100 hover:bg-gray-600 transition flex items-center justify-center">
-                  <span>Generate Improvement Plan</span>
+                  <span>Generate Readiness Plan</span>
                 </button>
                 <button className="bg-gray-700 border border-gray-600 py-2.5 px-3 rounded-lg text-sm font-medium text-gray-100 hover:bg-gray-600 transition flex items-center justify-center">
                   <span>View Detailed Analysis</span>
@@ -607,19 +606,19 @@ const PathshaalaDashboard = () => {
               </div>
             </motion.div>
 
-            {/* Upcoming Goals */}
+            {/* Preparedness Goals */}
             <motion.div 
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.6 }}
               className="bg-gray-800 bg-opacity-70 backdrop-blur-sm p-5 rounded-xl border border-gray-700"
             >
-              <h2 className="text-xl font-semibold text-gray-100 mb-4">Your Goals</h2>
+              <h2 className="text-xl font-semibold text-gray-100 mb-4">Your Preparedness Goals</h2>
               
               <div className="space-y-4">
                 <div className="bg-gray-700 bg-opacity-50 p-3 rounded-lg border border-gray-600">
                   <div className="flex justify-between items-center mb-2">
-                    <span className="text-sm font-medium text-gray-100">Daily Streak</span>
+                    <span className="text-sm font-medium text-gray-100">Daily Learning Streak</span>
                     <span className="text-xs px-2 py-1 bg-cyan-900 text-cyan-200 rounded-full border border-cyan-700">5 days</span>
                   </div>
                   <div className="w-full bg-gray-600 rounded-full h-2">
@@ -631,23 +630,23 @@ const PathshaalaDashboard = () => {
                 <div className="bg-gray-700 bg-opacity-50 p-3 rounded-lg border border-gray-600">
                   <div className="flex justify-between items-center mb-2">
                     <span className="text-sm font-medium text-gray-100">Weekly Target</span>
-                    <span className="text-xs px-2 py-1 bg-emerald-900 text-emerald-200 rounded-full border border-emerald-700">8/10 quizzes</span>
+                    <span className="text-xs px-2 py-1 bg-emerald-900 text-emerald-200 rounded-full border border-emerald-700">8/10 modules</span>
                   </div>
                   <div className="w-full bg-gray-600 rounded-full h-2">
                     <div className="bg-emerald-400 h-2 rounded-full" style={{width: '80%'}}></div>
                   </div>
-                  <p className="text-xs text-gray-400 mt-2">Complete 2 more quizzes this week</p>
+                  <p className="text-xs text-gray-400 mt-2">Complete 2 more modules this week</p>
                 </div>
                 
                 <div className="bg-gray-700 bg-opacity-50 p-3 rounded-lg border border-gray-600">
                   <div className="flex justify-between items-center mb-2">
-                    <span className="text-sm font-medium text-gray-100">Rank Improvement</span>
-                    <span className="text-xs px-2 py-1 bg-purple-900 text-purple-200 rounded-full border border-purple-700">#6 → #5</span>
+                    <span className="text-sm font-medium text-gray-100">Preparedness Level</span>
+                    <span className="text-xs px-2 py-1 bg-purple-900 text-purple-200 rounded-full border border-purple-700">Level 6 → 7</span>
                   </div>
                   <div className="w-full bg-gray-600 rounded-full h-2">
                     <div className="bg-purple-400 h-2 rounded-full" style={{width: '60%'}}></div>
                   </div>
-                  <p className="text-xs text-gray-400 mt-2">120 points needed to reach next rank</p>
+                  <p className="text-xs text-gray-400 mt-2">120 points needed to reach next level</p>
                 </div>
               </div>
             </motion.div>
@@ -658,4 +657,4 @@ const PathshaalaDashboard = () => {
   );
 };
 
-export default PathshaalaDashboard;
+export default DisasterPreparednessDashboard;
