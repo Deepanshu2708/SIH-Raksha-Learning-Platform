@@ -3,18 +3,17 @@ import react from '@vitejs/plugin-react';
 import path from "path";
 import tailwindcss from '@tailwindcss/vite';
 
-// https://vite.dev/config/
 export default defineConfig({
   plugins: [react(), tailwindcss()],
-  base : '/sih/',
+  base: "./",  // 👈 relative path for Vercel
 
-   server: {
-        port: 3000,
-        historyApiFallback: true,
+  server: {
+    port: 3000,
+    historyApiFallback: true,
+  },
+  resolve: {
+    alias: {
+      "@": path.resolve(__dirname, "./src"),
     },
-     resolve: {
-        alias: {
-            "@": path.resolve(__dirname, "./src"),
-        },
-    },
+  },
 })
