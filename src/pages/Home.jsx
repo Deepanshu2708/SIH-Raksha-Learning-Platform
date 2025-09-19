@@ -45,7 +45,7 @@ function Home() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#0F172A] via-[#1E293B] to-[#0F172A] text-white">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 to-blue-900  text-white">
       <main className="container mx-auto px-4 lg:px-8 py-10">
         
         {/* Hero Section */}
@@ -53,7 +53,7 @@ function Home() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, ease: "easeOut" }}
-          className="relative bg-gradient-to-r from-blue-800/70 to-indigo-800/70 rounded-3xl p-10 text-center shadow-2xl mb-12"
+          className="relative bg-gradient-to-r from-blue-600/80 to-indigo-700/70 rounded-3xl p-10 text-center shadow-2xl mb-12"
         >
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-tight mb-4">
             Real-Time Disaster Management
