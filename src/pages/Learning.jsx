@@ -4,12 +4,9 @@ import {
   Shield,
   Flame,
   Waves,
-  ChevronLeft,
   Users,
   Award,
-} from "lucide-react"; // icons
-
-import FloodCardWithMap from "./zigzaglearning";
+} from "lucide-react";
 
 // Fancy disaster cards
 const DisasterCard = ({ type, title, description, onClick, learners, progress }) => {
@@ -64,11 +61,10 @@ const DisasterCard = ({ type, title, description, onClick, learners, progress })
   );
 };
 
-export default function Learning() {
-  const [activeModule, setActiveModule] = useState(null);
-
+export default function Learning({ onModuleSelect }) {
   const modules = [
     {
+      id: "flood",
       title: "Flood Preparedness",
       description: "Learn how to stay safe and protect your property during floods.",
       type: "flood",
@@ -76,6 +72,7 @@ export default function Learning() {
       progress: 45,
     },
     {
+      id: "earthquake",
       title: "Earthquake Preparedness",
       description: "Essential earthquake safety tips including emergency kit preparation.",
       type: "earthquake",
@@ -83,6 +80,7 @@ export default function Learning() {
       progress: 60,
     },
     {
+      id: "fire",
       title: "Fire Safety",
       description: "Prevent fires and learn how to respond safely in emergencies.",
       type: "fire",
@@ -90,20 +88,6 @@ export default function Learning() {
       progress: 20,
     },
   ];
-
-  if (activeModule === "flood" || activeModule === "earthquake" || activeModule === "fire") {
-    return (
-      <div className=" min-h-screen bg-slate-950 text-white">
-        {/* <button
-          onClick={() => setActiveModule(null)}
-          className="flex items-center gap-2 text-cyan-400 hover:text-emerald-500 mb-4"
-        >
-          <ChevronLeft size={18} /> Back to Modules
-        </button> */}
-        <FloodCardWithMap />
-      </div>
-    );
-  }
 
   return (
     <div className="p-8 min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 text-white">
@@ -136,7 +120,7 @@ export default function Learning() {
             description={mod.description}
             learners={mod.learners}
             progress={mod.progress}
-            onClick={() => setActiveModule(mod.type)}
+            onClick={() => onModuleSelect(mod.id)}
           />
         ))}
       </div>
@@ -151,9 +135,12 @@ export default function Learning() {
         <h2 className="text-2xl font-bold mb-4">Recommended for You</h2>
         <p className="text-slate-400 text-sm mb-4">
           Based on your activity, we suggest you to try <span className="text-cyan-400">Fire Safety</span> next.  
-          You’re just 2 modules away from unlocking the <span className="font-semibold text-yellow-400">“Disaster Hero”</span> badge!
+          You're just 2 modules away from unlocking the <span className="font-semibold text-yellow-400">"Disaster Hero"</span> badge!
         </p>
-        <button className="bg-gradient-to-r from-yellow-400 to-orange-500 text-black font-semibold py-2 px-6 rounded-lg hover:scale-105 transition-transform">
+        <button 
+          className="bg-gradient-to-r from-yellow-400 to-orange-500 text-black font-semibold py-2 px-6 rounded-lg hover:scale-105 transition-transform"
+          onClick={() => onModuleSelect("fire")}
+        >
           Start Now
         </button>
       </motion.div>

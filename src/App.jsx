@@ -10,6 +10,7 @@ import Drills from "./pages/Drills";
 import Region from "./pages/Region";
 import Dashboard from "./pages/Dashboard";
 import Settings from "./pages/settings.jsx";
+import zigzag from "./pages/zigzaglearning.jsx"
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -41,6 +42,7 @@ function App() {
               <Route path="/region" element={<Region />} />
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/settings" element={<Settings />} />
+              <Route path="/zigzag" element={<zigzag />} />
               {/* Agar user galat route pe gaya to default HomePage dikhe */}
               <Route path="*" element={<Navigate to="/" />} />
             </Routes>
